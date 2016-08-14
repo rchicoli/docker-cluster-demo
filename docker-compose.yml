@@ -11,9 +11,14 @@ logstash:
   volumes:
     - ./logstash/config:/etc/logstash/conf.d
   ports:
-    - "5000:5000"
+    - 5000
+    - 5001
+    - 5002
   links:
     - elasticsearch
+  # environment:
+  #   LOGSPOUT: "ignore"
+ 
 kibana:
   build: kibana/
   volumes:
