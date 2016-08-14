@@ -1,0 +1,16 @@
+version: '2'
+services:
+  registrator:
+    image: gliderlabs/registrator:latest
+    network_mode: "host"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: -internal consul://localhost:8500
+    environment:
+      LOGSPOUT: ignore
+  logspout:
+    images: fteychene/logspout-logstash:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      ROUTE_URIS: logstash://172.17.0.4:5001
