@@ -6,4 +6,7 @@ services:
       - 8000:80
     network_mode: "bridge"
     environment:
-      LOGSTASH_TAG: "test"
+      SERVICE_TAGS: "green,service"
+      SERVICE_80_CHECK_TIMEOUT: "2s"
+      SERVICE_80_CHECK_INTERVAL: "5s"
+      SERVICE_80_CHECK_HTTP: "/"
