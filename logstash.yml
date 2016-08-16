@@ -1,0 +1,19 @@
+version: "2"
+services:
+  logstash:
+    build: logstash/
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./logstash/config:/etc/logstash/conf.d
+    ports:
+      - 5000
+      - 5001
+      - 5002
+    depends_on:
+      - elasticsearch
+      - consul1
+    networks:
+      cluster:
+        aliases:
+          - logstash
+        ipv4_address: 172.31.0.254
