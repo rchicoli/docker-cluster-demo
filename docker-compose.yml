@@ -6,6 +6,13 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+      cluster:
+        aliases:
+          - elasticsearch
+    depends_on:
+      - consul1
+      - registrator
   logstash:
     build: logstash/
     command: logstash -f /etc/logstash/conf.d/logstash.conf
@@ -15,13 +22,34 @@ services:
       - 5000
       - 5001
       - 5002
-    links:
+    depends_on:
       - elasticsearch
+      - consul1
+    networks:
+      cluster:
+        aliases:
+          - logstash
+        ipv4_address: 172.31.0.254
   kibana:
     build: kibana/
     volumes:
       - ./kibana/config/:/opt/kibana/config/
     ports:
       - "5601:5601"
-    links:
+    depends_on:
       - elasticsearch
+      - consul1
+      - registrator
+    networks:
+      cluster:
+        aliases:
+          - kibana
+
+networks:
+  cluster:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.31.0.0/24
+        gateway: 172.31.0.1
