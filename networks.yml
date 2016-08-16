@@ -1,0 +1,10 @@
+version: "2"
+
+networks:
+  cluster:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.31.0.0/24
+        gateway: 172.31.0.1
