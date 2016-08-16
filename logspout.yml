@@ -1,0 +1,6 @@
+version: '2'
+services:
+  logspout:
+    images: fteychene/logspout-logstash:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
