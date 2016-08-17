@@ -1,0 +1,31 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306
+    environment:
+      SERVICE_TAGS: "green,service"
+      SERVICE_3306_CHECK_TIMEOUT: "2s"
+      SERVICE_3306_CHECK_INTERVAL: "5s"
+      SERVICE_3306_CHECK_TCP: "true"
+      # SERVICE_CHECK_SCRIPT: "nc -z 172.31.0.9 3306 && echo OK || echo FAILED"
+      MYSQL_USER: "bob"
+      MYSQL_PASSWORD: "secret"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_DATABASE: "test"
+    depends_on:
+      - consul1
+      - consul2
+      - consul3
+      - registrator
+      - elasticsearch
+      - logstash
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://172.31.0.254:5002"
+    networks:
+      cluster:
+        aliases:
+          - mysql
