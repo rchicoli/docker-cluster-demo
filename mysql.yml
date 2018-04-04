@@ -24,7 +24,7 @@ services:
     logging:
       driver: "gelf"
       options:
-        gelf-address: "udp://172.31.0.254:5002"
+        gelf-address: "udp://172.32.0.254:5002"
     networks:
       cluster:
         aliases:

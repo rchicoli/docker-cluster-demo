@@ -11,9 +11,8 @@ services:
       - 5002
     depends_on:
       - elasticsearch
-      - consul1
     networks:
       cluster:
         aliases:
           - logstash
-        ipv4_address: 172.31.0.254
+        ipv4_address: 172.32.0.254

@@ -1,26 +1,26 @@
 version: '2'
 services:
   hello-world:
-    image: tutum/hello-world
-    ports:
-      - 8000:80
+    image: rchicoli/webapper
+    expose:
+      - 8080
     environment:
       SERVICE_TAGS: "green,service"
       SERVICE_80_CHECK_TIMEOUT: "2s"
       SERVICE_80_CHECK_INTERVAL: "5s"
       SERVICE_80_CHECK_HTTP: "/"
     depends_on:
-      - consul1
-      - consul2
-      - consul3
-      - registrator
+      # - consul1
+      # - consul2
+      # - consul3
+      # - registrator
       - elasticsearch
       - logstash
     logging:
       driver: "gelf"
       options:
-        gelf-address: "udp://172.31.0.254:5002"
+        gelf-address: "udp://172.32.0.254:5002"
     networks:
       cluster:
         aliases:
-          - hello-world
+          - webapper

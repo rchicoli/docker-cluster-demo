@@ -1,8 +1,8 @@
 version: "2"
 services:
   elasticsearch:
-    image: elasticsearch:latest
-    command: elasticsearch -Des.network.host=0.0.0.0
+    image: elasticsearch:5-alpine
+    command: elasticsearch -E network.host=0.0.0.0
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -10,7 +10,3 @@ services:
       cluster:
         aliases:
           - elasticsearch
-    depends_on:
-      - consul1
-      - registrator
-
